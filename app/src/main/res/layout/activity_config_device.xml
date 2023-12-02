@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/config_device"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/background_vertical_margin"
+    android:paddingTop="@dimen/background_horizontal_margin"
+    android:paddingRight="@dimen/background_vertical_margin"
+    android:paddingBottom="@dimen/background_horizontal_margin"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".ui.device.ConfigDeviceActivity" >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background_device_connect"
+        android:contentDescription="@string/app_name" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <!-- Icon -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            >
+
+            <ImageView
+                android:layout_width="186dp"
+                android:layout_height="186dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_amelia_foreground"
+                android:contentDescription="@string/app_name" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/wifiName"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="50dp"
+
+                android:background="@drawable/round_input"
+                android:hint="@string/prompt_wifi_name"
+
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:nextFocusForward="@id/password"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+
+                android:selectAllOnFocus="true"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:autofillHints="wifi" />
+
+            <EditText
+                android:id="@+id/wifiPass"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="50dp"
+
+                android:background="@drawable/round_input"
+                android:hint="@string/prompt_password"
+
+                android:imeOptions="actionNext"
+                android:nextFocusForward="@id/login"
+                android:nextFocusDown="@+id/login"
+                android:inputType="textPassword"
+                android:windowSoftInputMode="stateHidden|adjustResize"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:selectAllOnFocus="true"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/username"
+                android:autofillHints="password" />
+
+            <Button
+                android:id="@+id/connectToWifi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="55dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/round_button_device_config"
+                android:enabled="false"
+                android:text="@string/action_connect_wifi"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/password"
+                app:layout_constraintVertical_bias="0.2" />
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

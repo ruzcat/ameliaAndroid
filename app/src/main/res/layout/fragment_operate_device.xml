@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/listPreferredItemHeight"
+    android:orientation="vertical"
+    android:paddingBottom="5dp"
+    android:paddingLeft="1dp"
+    android:paddingRight="1dp"
+    android:paddingTop="5dp"
+    android:background="@drawable/round_operate_device_item"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:id="@+id/itemOperateDeviceList"
+    >
+
+
+    <TextView
+        android:id="@+id/circleInit"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/circle_connector_init"
+        />
+
+
+    <TextView
+        android:id="@+id/circleContinue1"
+        android:layout_width="9dp"
+        android:layout_height="9dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="13dp"
+        android:background="@drawable/circle_connector_continue"
+        />
+
+    <TextView
+        android:id="@+id/circleContinue2"
+        android:layout_width="9dp"
+        android:layout_height="9dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="13dp"
+        android:background="@drawable/circle_connector_continue"
+        />
+
+    <TextView
+        android:id="@+id/circleContinue3"
+        android:layout_width="9dp"
+        android:layout_height="9dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginStart="13dp"
+        android:background="@drawable/circle_connector_continue"
+        />
+
+    <TextView
+        android:id="@+id/circleContinue4"
+        android:layout_width="9dp"
+        android:layout_height="9dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginStart="13dp"
+        android:background="@drawable/circle_connector_continue"
+        />
+
+    <TextView
+        android:id="@+id/circleContinue5"
+        android:layout_width="9dp"
+        android:layout_height="9dp"
+        android:layout_marginTop="43dp"
+        android:layout_marginStart="13dp"
+        android:background="@drawable/circle_connector_continue"
+        />
+
+    <TextView
+        android:id="@+id/circleEnd"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/circle_connector_init"
+        />
+
+
+    <TextView
+        android:id="@+id/device_serial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="@string/device_serial"
+        android:textAppearance="?attr/textAppearanceListItem"
+
+        tools:ignore="RelativeOverlap" />
+
+    <TextView
+        android:id="@+id/device_ip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/device_serial"
+        android:layout_below="@+id/device_serial"
+        android:text="@string/device_ip"
+
+        />
+
+    <!-- time up -->
+    <TextView
+        android:id="@+id/txt_up_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/string_space"
+        android:layout_alignParentEnd="false"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_alignStart="@+id/device_serial"
+        android:layout_below="@+id/device_serial"
+        android:layout_gravity="start|center_vertical"
+
+        />
+
+    <!-- btn up -->
+        <ImageView
+            android:id="@+id/btnUp"
+            android:layout_width="29dp"
+            android:layout_height="29dp"
+            android:layout_alignParentEnd="false"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginStart="140dp"
+            android:layout_alignStart="@+id/device_serial"
+            android:layout_gravity="end|center_vertical"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_up"
+
+            />
+
+    <!-- btn down -->
+    <ImageView
+        android:id="@+id/btnDown"
+        android:layout_width="29dp"
+        android:layout_height="29dp"
+        android:layout_alignParentEnd="false"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="200dp"
+        android:layout_alignStart="@+id/device_serial"
+        android:layout_gravity="end|center_vertical"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_down"
+
+        />
+    <!--
+            <TextView
+                android:id="@+id/txt_count_guest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" "
+                android:layout_alignParentEnd="false"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginStart="22dp"
+                android:layout_alignStart="@+id/numGuests"
+                android:layout_below="@+id/txt_apellido"
+                android:layout_gravity="start|center_vertical"/>
+    -->
+        <!--<View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="11dp"
+            android:layout_alignStart="@+id/numGuests"
+            android:layout_below="@+id/numGuests"
+            android:background="?android:attr/listDivider" />
+        -->
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="5dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_amelia_box"
+            android:contentDescription="@string/app_name" />
+    </RelativeLayout>
