@@ -4,7 +4,13 @@
     android:id="@+id/wifi_list_item"
     android:layout_width="match_parent"
     android:layout_height="64dp"
-    android:background="?android:attr/selectableItemBackground">
+    android:background="@drawable/card_border"
+    app:cardElevation="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardUseCompatPadding="true"
+    android:layout_marginTop="4dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp">
 
     <TextView
         android:id="@+id/ssid"
@@ -23,10 +29,10 @@
 
     <TextView
         android:id="@+id/wave_level"
-        android:layout_width="64dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="1dp"
         android:text="@string/wifi_level"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/security_type"
@@ -38,7 +44,7 @@
         android:id="@+id/security_type"
         android:layout_width="64dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="1dp"
         android:layout_marginEnd="8dp"
         android:text="@string/wifi_security"
         app:layout_constraintBottom_toBottomOf="parent"

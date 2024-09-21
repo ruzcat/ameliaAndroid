@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <EditText
+            <Spinner
                 android:id="@+id/wifiName"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -73,7 +73,31 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:autofillHints="wifi" />
+                android:autofillHints="wifi"  />
+
+           <!-- <EditText
+                android:id="@+id/wifiName"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="50dp"
+
+                android:background="@drawable/round_input"
+                android:hint="@string/prompt_wifi_name"
+
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:nextFocusForward="@id/password"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+
+                android:selectAllOnFocus="true"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:autofillHints="wifi" /> -->
 
             <EditText
                 android:id="@+id/wifiPass"

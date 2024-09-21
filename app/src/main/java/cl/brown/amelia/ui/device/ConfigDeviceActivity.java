@@ -1,102 +1,110 @@
 package cl.brown.amelia.ui.device;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import cl.brown.amelia.MainActivity;
 import cl.brown.amelia.R;
-import cl.brown.amelia.service.HttpExecutorRunner;
-import cl.brown.amelia.service.HttpServiceCallable;
+import cl.brown.amelia.http.HttpExecutorRunner;
+import cl.brown.amelia.http.HttpServices;
 import cl.brown.amelia.ui.wifi.WifiFragment;
-import cl.brown.amelia.util.HttpServiceDeviceUtils;
-import okhttp3.Call;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import cl.brown.amelia.utils.Constants;
 
-public class ConfigDeviceActivity extends AppCompatActivity {
+public class ConfigDeviceActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private static final String TAG = ConfigDeviceActivity.class.getName();
+    private String mSSID;
+    private WifiManager mWifiManager;
+    private String[] mWifiList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config_device);
 
-        final EditText wifiNameEditText = findViewById(R.id.wifiName);
+        mWifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+        getListWifi();
+        final Spinner wifiNameEditText = findViewById(R.id.wifiName);
+        wifiNameEditText.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+
+        //Create a Array Adapter
+        ArrayAdapter adapter = new ArrayAdapter<>(ConfigDeviceActivity.this, android.R.layout.simple_spinner_item, mWifiList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Assigning the adapter to Spinner
+        wifiNameEditText.setAdapter(adapter);
+
         final EditText wifiPassEditText = findViewById(R.id.wifiPass);
         final Button wifiConnectBtn = findViewById(R.id.connectToWifi);
 
-        wifiPassEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (v.getId() == R.id.password && !hasFocus) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        wifiPassEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (v.getId() == R.id.password && !hasFocus) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
-                }
             }
         });
 
-        wifiConnectBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HttpExecutorRunner httpExecutorRunner = new HttpExecutorRunner();
-                httpExecutorRunner.execute(new HttpServiceCallable(HttpServiceDeviceUtils.CONFIG_ACTION, wifiNameEditText.getText().toString(), wifiPassEditText.getText().toString()), new HttpExecutorRunner.Callback<Boolean>() {
-                    @Override
-                    public void onComplete(Boolean result) {
-                        Log.i(TAG, "httpExecutorRunner.onComplete: "+result);
-                        if(result) {
-                            WifiFragment.getInstance().unregisterNetworkCallback();
-                            Toast.makeText(getBaseContext(), "Amelia Lista para atenderte", Toast.LENGTH_SHORT).show();
-                            //showInfoAlert("Access Point New Connect", "Amelia Lista para atenderte" );
-                            Intent myIntent = new Intent(ConfigDeviceActivity.this, MainActivity.class);
-                            myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            // Closing all the Activities
-                            myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        wifiConnectBtn.setOnClickListener(v -> {
+            HttpExecutorRunner httpExecutorRunner = new HttpExecutorRunner();
+            httpExecutorRunner.execute(new HttpServices(Constants.CONFIG_ACTION, mSSID, wifiPassEditText.getText().toString()), new HttpExecutorRunner.Callback<Boolean>() {
+                @Override
+                public void onComplete(Boolean result) {
+                    Log.i(TAG, "httpExecutorRunner.onComplete: " + result);
+                    if (result) {
+                        WifiFragment.getInstance().unregisterNetworkCallback();
+                        Toast.makeText(getBaseContext(), "Amelia Lista para atenderte", Toast.LENGTH_SHORT).show();
+                        //showInfoAlert("Access Point New Connect", "Amelia Lista para atenderte" );
+                        Intent myIntent = new Intent(ConfigDeviceActivity.this, MainActivity.class);
+                        myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        // Closing all the Activities
+                        myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-                            // Add new Flag to start new Activity
-                            myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            myIntent.addCategory(Intent.CATEGORY_HOME);
-                            startActivity(myIntent);
-                            ConfigDeviceActivity.this.finish();
-                        }else{
-                            showInfoAlert("Access Point Error Connection", "Intente Nuevamente" );
-                        }
+                        // Add new Flag to start new Activity
+                        myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        myIntent.addCategory(Intent.CATEGORY_HOME);
+                        WifiFragment.getInstance().registerNetWork();
+                        startActivity(myIntent);
+                        ConfigDeviceActivity.this.finish();
+                    } else {
+                        showInfoAlert("Access Point Error Connection", "Intente Nuevamente");
                     }
+                }
 
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e(TAG, "httpExecutorRunner.onError: ", e);
-                        showInfoAlert("Access Point Error Connection", "Intente Nuevamente" );
-                    }
-                });
-            }
+                @Override
+                public void onError(Exception e) {
+                    Log.e(TAG, "httpExecutorRunner.onError: ", e);
+                    showInfoAlert("Access Point Error Connection", "Intente Nuevamente");
+                }
+            });
         });
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
@@ -117,15 +125,9 @@ public class ConfigDeviceActivity extends AppCompatActivity {
         };
 
         wifiPassEditText.addTextChangedListener(afterTextChangedListener);
-        wifiPassEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.i(TAG, "wifiPassEditText.onEditorAction: "+actionId);
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    return true;
-                }
-                return false;
-            }
+        wifiPassEditText.setOnEditorActionListener((v, actionId, event) -> {
+            Log.i(TAG, "wifiPassEditText.onEditorAction: " + actionId);
+            return actionId == EditorInfo.IME_ACTION_DONE;
         });
 
         // This callback will only be called when MyFragment is at least Started.
@@ -170,14 +172,75 @@ public class ConfigDeviceActivity extends AppCompatActivity {
         // Create the Alert dialog
         AlertDialog alertDialog = builder.create();
         // Show the Alert Dialog box
-        ConfigDeviceActivity.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Log.i("alertDialog", "dialog show ");
-                alertDialog.show();
-            }
+        ConfigDeviceActivity.this.runOnUiThread(() -> {
+            Log.i("alertDialog", "dialog show ");
+            alertDialog.show();
         });
         //alertDialog.show();
     }
-    
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        mSSID = mWifiList[position];
+        Toast.makeText(getApplicationContext(), "You have Chosen :" + mWifiList[position], Toast.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    private void getListWifi() {
+        ArrayList<String> wifiList = new ArrayList();
+        mWifiList = null;
+        if (mWifiManager == null) {
+            mWifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        List<ScanResult> scanResults = mWifiManager.getScanResults();
+        scanResults.forEach(wifiScan -> {
+            if (wifiScan != null) {
+                if (wifiScan.SSID != null) {
+                    if(!wifiScan.SSID.isEmpty()) {
+                        Log.d(TAG, "refreshWifiList: wifiScan "+wifiScan.SSID);
+                        if (!wifiScan.SSID.contains("Amelia")) {
+                            Log.d(TAG, "refreshWifiList: adding ");
+                            Log.d(TAG, "refreshWifiList: wifiScan.SSID " + wifiScan.SSID);
+                            Log.d(TAG, "refreshWifiList: wifiScan.level " + wifiScan.level);
+                            Log.d(TAG, "refreshWifiList: wifiScan.capabilities " + wifiScan.capabilities);
+                            Log.d(TAG, "refreshWifiList: wifiScan.BSSID " + wifiScan.BSSID);
+                            Log.d(TAG, "refreshWifiList: wifiScan.frequency " + wifiScan.frequency);
+                            Log.d(TAG, "refreshWifiList: wifiScan.channelWidth " + wifiScan.channelWidth);
+                            if(!wifiList.contains(wifiScan.SSID)) {
+                                wifiList.add(wifiScan.SSID);
+                            }
+                        }
+                    }
+                }
+            }
+
+        });
+        if(wifiList.size() > 0) {
+            Log.d(TAG, "refreshWifiList: ordering");
+            Collections.sort(wifiList, new Comparator<String>() {
+                public int compare(String obj1, String obj2) {
+                    return obj1.compareTo(obj2);
+                }
+            });
+            Log.d(TAG, "refreshWifiList: wifiList " + wifiList.size());
+        }else {
+            Log.d(TAG, "refreshWifiList: wifiList empty");
+        }
+        mWifiList = wifiList.stream().toArray(String[]::new);
+    }
 }

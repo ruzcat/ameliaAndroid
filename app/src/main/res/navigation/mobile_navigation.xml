@@ -12,18 +12,6 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="cl.brown.amelia.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="cl.brown.amelia.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-
-    <fragment
         android:id="@+id/nav_operate_device"
         android:name="cl.brown.amelia.ui.device.OperateDeviceFragment"
         android:label="@string/menu_operate_device"
@@ -34,7 +22,5 @@
         android:name="cl.brown.amelia.ui.wifi.WifiFragment"
         android:label="@string/menu_setting_device"
         tools:layout="@layout/fragment_wifi" />
-
-
 
 </navigation>

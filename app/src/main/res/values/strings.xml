@@ -31,6 +31,7 @@
 
     <string name="device_serial">Serial</string>
     <string name="device_ip">IP</string>
+    <string name="device_menu_unlink">Desvincular</string>
 
     <string name="dialog_btn_ok">Ok</string>
     <string name="dialog_btn_cancel">Canceler</string>

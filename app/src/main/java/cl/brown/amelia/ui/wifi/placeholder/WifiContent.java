@@ -27,20 +27,20 @@ public class WifiContent {
 
     private static final int COUNT = 0;
 
-    static {
+    /*static {
         // Add some sample items.
         for (int i = 1; i <= COUNT; i++) {
             addItem(createPlaceholderItem(i));
         }
-    }
+    }*/
 
-    private static void addItem(WifiItem item) {
+    public static void addItem(WifiItem item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.ssid, item);
     }
 
     private static WifiItem createPlaceholderItem(int position) {
-        return new WifiItem(String.valueOf(position), position, makeDetails(position));
+        return new WifiItem(String.valueOf(position), "Item " + position, 0, makeDetails(position));
     }
 
     private static String makeDetails(int position) {
@@ -56,11 +56,13 @@ public class WifiContent {
      * A placeholder item representing a piece of content.
      */
     public static class WifiItem {
+        public final String id;
         public final String ssid;
         public final Integer waveLevel;
         public final String securityType;
 
-        public WifiItem(String ssid, Integer waveLevel, String securityType) {
+        public WifiItem(String id, String ssid, Integer waveLevel, String securityType) {
+            this.id = id;
             this.ssid = ssid;
             this.waveLevel = waveLevel;
             this.securityType = securityType;
@@ -69,7 +71,7 @@ public class WifiContent {
         @NonNull
         @Override
         public String toString() {
-            return String.valueOf(waveLevel);
+            return String.valueOf(ssid);
         }
     }
 }

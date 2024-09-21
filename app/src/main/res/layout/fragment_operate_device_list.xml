@@ -6,8 +6,8 @@
     android:name="cl.brown.amelia.ui.device.OperateDeviceFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
+    android:layout_marginLeft="7dp"
+    android:layout_marginRight="7dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".ui.device.OperateDeviceFragment"
     tools:listitem="@layout/fragment_operate_device" />

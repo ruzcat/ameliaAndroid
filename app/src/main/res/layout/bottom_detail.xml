@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_dialog">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="20dp"
+        app:srcCompat="@drawable/ic_up"
+        app:tint="@null"
+        app:fabCustomSize="55dp"
+        app:maxImageSize="50dp"
+        android:contentDescription="@string/app_name"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnStop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="95dp"
+        app:srcCompat="@drawable/ic_stop"
+        app:tint="@null"
+        app:fabCustomSize="55dp"
+        app:maxImageSize="50dp"
+        android:contentDescription="@string/app_name"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnSet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="95dp"
+        android:layout_marginStart="170dp"
+        app:srcCompat="@drawable/ic_add_config"
+        app:tint="@null"
+        app:fabCustomSize="55dp"
+        app:maxImageSize="50dp"
+        android:contentDescription="@string/app_name"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnResetConfig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="95dp"
+        android:layout_marginEnd="170dp"
+        app:srcCompat="@drawable/ic_reset_config"
+        app:tint="@null"
+        app:fabCustomSize="55dp"
+        app:maxImageSize="50dp"
+        android:contentDescription="@string/app_name"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnDown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="170dp"
+        app:srcCompat="@drawable/ic_down"
+        app:tint="@null"
+        app:fabCustomSize="55dp"
+        app:maxImageSize="50dp"
+        android:contentDescription="@string/app_name"
+        />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

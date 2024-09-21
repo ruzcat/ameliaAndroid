@@ -20,9 +20,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import cl.brown.amelia.R;
-import cl.brown.amelia.database.UtilsBD;
+import cl.brown.amelia.utils.DataBase;
 import cl.brown.amelia.ui.device.placeholder.OperateDeviceContent;
-import cl.brown.amelia.ui.wifi.WifiFragment;
 
 /**
  * A fragment representing a list of Items.
@@ -47,7 +46,7 @@ public class OperateDeviceFragment extends Fragment {
      */
     public OperateDeviceFragment() {
         Log.d(TAG, "Constructor:");
-        this.instance = this;
+        instance = this;
     }
 
     // TODO: Customize parameter initialization
@@ -89,7 +88,7 @@ public class OperateDeviceFragment extends Fragment {
             } else {
                 rvDevices.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            operateDeviceListAdapter = new OperateDeviceRecyclerViewAdapter(OperateDeviceContent.ITEMS);
+            operateDeviceListAdapter = new OperateDeviceRecyclerViewAdapter(OperateDeviceContent.ITEMS, this);
             rvDevices.setAdapter(operateDeviceListAdapter);
         }
         return view;
@@ -102,7 +101,7 @@ public class OperateDeviceFragment extends Fragment {
         if(!devicesLoad) {
             Handler handler = new Handler();
             @SuppressLint("NotifyDataSetChanged") Runnable r = () -> {
-                operateDeviceListAdapter.updateList(UtilsBD.getAllDevices());
+                operateDeviceListAdapter.updateList(DataBase.getAllDevices());
                 if(operateDeviceListAdapter.getItemCount() > 0){
                     devicesLoad = true;
                 }
@@ -165,5 +164,15 @@ public class OperateDeviceFragment extends Fragment {
 
     public Network getNetworkConnected() {
         return networkConnected;
+    }
+
+    public void refreshListView(final int pos, final int total){
+        getActivity().runOnUiThread(() -> {
+            operateDeviceListAdapter.notifyItemRemoved(pos);
+            operateDeviceListAdapter.notifyItemRangeChanged(pos,total);
+            operateDeviceListAdapter.notifyItemRangeRemoved(pos,total);
+            operateDeviceListAdapter.notifyDataSetChanged();
+        });
+
     }
 }
